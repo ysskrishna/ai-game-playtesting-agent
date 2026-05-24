@@ -63,6 +63,10 @@ artifacts/20250524143022/
 | `OPENAI_API_KEY` | (required) | OpenAI API key |
 | `OPENAI_MODEL` | `gpt-4o` | Vision + report model |
 | `PLAYTEST_GAME_URL` | `https://play2048.co/` | Game URL |
+| `PLAYTEST_RUNS` | `1` | Default `--runs` when flag omitted |
+| `PLAYTEST_MAX_MOVES` | `50` | Default `--max-moves` when flag omitted |
+| `PLAYTEST_HEADED` | `false` | Default headed browser when flag omitted |
+| `PLAYTEST_ARTIFACTS_ROOT` | `artifacts` | Root directory for session folders |
 
 ## Project layout
 

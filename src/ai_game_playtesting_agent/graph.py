@@ -1,13 +1,13 @@
 """LangGraph play loop: observe → act → … → report."""
 
 import operator
-import time
 from pathlib import Path
 from typing import Annotated, Literal, TypedDict
 
 from langgraph.graph import END, StateGraph
 
 from ai_game_playtesting_agent.browser import GameBrowser
+from ai_game_playtesting_agent.config import Settings
 from ai_game_playtesting_agent.events import detect_events
 from ai_game_playtesting_agent.models import BoardObservation, GameEvent
 from ai_game_playtesting_agent.report import write_report
@@ -34,17 +34,17 @@ class PlaytestState(TypedDict):
 def build_graph(
     browser: GameBrowser,
     observer: VisionObserver,
-    settings,
+    settings: Settings,
     session_dir: Path,
     session_id: str,
     max_moves: int,
 ):
-    moves_log = session_dir / "logs" / "moves.jsonl"
-    events_log = session_dir / "logs" / "events.jsonl"
+    moves_log = session_dir / settings.logs_dir_name / settings.moves_log_filename
+    events_log = session_dir / settings.logs_dir_name / settings.events_log_filename
 
     def observe(state: PlaytestState) -> dict:
         step = state["step"]
-        shot_path = session_dir / "screenshots" / f"move_{step:04d}.png"
+        shot_path = session_dir / settings.screenshots_dir_name / f"move_{step:04d}.png"
         browser.screenshot(shot_path)
 
         previous = BoardObservation.model_validate(state["previous"]) if state.get("previous") else None
@@ -54,9 +54,10 @@ def build_graph(
             current = observer.observe(shot_path)
         except Exception:
             vision_errors += 1
+            size = settings.vision_fallback_grid_size
             current = BoardObservation(
-                grid=[[0] * 4 for _ in range(4)],
-                move="up",
+                grid=[[0] * size for _ in range(size)],
+                move=settings.vision_fallback_move,
                 reasoning="vision error fallback",
                 confidence="low",
             )

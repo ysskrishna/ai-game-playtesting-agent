@@ -30,7 +30,7 @@ class GameBrowser:
             viewport={"width": self.settings.viewport_width, "height": self.settings.viewport_height}
         )
         self.page.goto(self.settings.game_url, wait_until="domcontentloaded")
-        self.page.wait_for_timeout(1500)
+        self.page.wait_for_timeout(self.settings.page_load_timeout_ms)
 
     def screenshot(self, path: Path) -> None:
         assert self.page is not None
@@ -59,7 +59,7 @@ class GameBrowser:
                 self.page.wait_for_timeout(self.settings.animation_ms)
                 return
         self.page.reload(wait_until="domcontentloaded")
-        self.page.wait_for_timeout(1500)
+        self.page.wait_for_timeout(self.settings.page_load_timeout_ms)
 
     def close(self) -> None:
         if self._browser:

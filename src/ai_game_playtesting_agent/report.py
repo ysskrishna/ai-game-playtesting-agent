@@ -53,7 +53,9 @@ def _format_metrics_table(metrics: SessionMetrics) -> str:
 
 
 def _synthesize_qualitative(settings: Settings, summary: str) -> str:
-    llm = ChatOpenAI(model=settings.openai_model, api_key=settings.openai_api_key, temperature=0.3)
+    llm = ChatOpenAI(
+        model=settings.openai_model, api_key=settings.openai_api_key, temperature=settings.report_temperature
+    )
     response = llm.invoke(
         [
             SystemMessage(content=SYNTHESIS_PROMPT),
@@ -81,7 +83,7 @@ def write_report(
     duration = time.time() - started_at
     metrics = compute_metrics(observations, events, duration, vision_errors)
 
-    moves_log = session_dir / "logs" / "moves.jsonl"
+    moves_log = session_dir / settings.logs_dir_name / settings.moves_log_filename
     sample_reasoning = []
     if moves_log.exists():
         for line in moves_log.read_text(encoding="utf-8").splitlines()[:5]:
@@ -100,11 +102,11 @@ def write_report(
     except Exception as exc:
         qualitative = (
             f"## Failure Analysis\n\n(Synthesis skipped: {exc})\n\n"
-            "## Behavioral Observations\n\nSee logs in `logs/`.\n\n"
+            f"## Behavioral Observations\n\nSee logs in `{settings.logs_dir_name}/`.\n\n"
             "## Suggested Improvements\n\nN/A"
         )
 
-    screenshot_refs = sorted((session_dir / "screenshots").glob("*.png"))
+    screenshot_refs = sorted((session_dir / settings.screenshots_dir_name).glob("*.png"))
     shots_md = "\n".join(f"- `{p.relative_to(session_dir)}`" for p in screenshot_refs[:10])
     if len(screenshot_refs) > 10:
         shots_md += f"\n- ... and {len(screenshot_refs) - 10} more"
@@ -125,7 +127,11 @@ def write_report(
     for event in events[-20:]:
         body += f"- **{event.kind}** (turn {event.turn}): {event.detail}\n"
 
-    body += f"\n{qualitative}\n\n---\n\nFull logs: `logs/moves.jsonl`, `logs/events.jsonl`\n"
+    logs = settings.logs_dir_name
+    body += (
+        f"\n{qualitative}\n\n---\n\n"
+        f"Full logs: `{logs}/{settings.moves_log_filename}`, `{logs}/{settings.events_log_filename}`\n"
+    )
 
     md_path = session_dir / "playtest_report.md"
     md_path.write_text(body, encoding="utf-8")
@@ -145,7 +151,7 @@ def write_report(
     )
 
     append_jsonl(
-        session_dir / "logs" / "report.jsonl",
+        session_dir / settings.logs_dir_name / settings.report_log_filename,
         {"session_id": session_id, "report": str(md_path.name), "metrics": metrics.model_dump()},
     )
 

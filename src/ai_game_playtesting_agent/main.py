@@ -14,7 +14,7 @@ from ai_game_playtesting_agent.vision import VisionObserver
 
 
 def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
-    session_id, session_dir = new_session_dir(settings.artifacts_root)
+    session_id, session_dir = new_session_dir(settings)
     started_at = time.time()
 
     write_session_meta(
@@ -59,13 +59,20 @@ def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
 
 def main() -> None:
     load_dotenv()
-    parser = argparse.ArgumentParser(description="AI game playtesting agent")
-    parser.add_argument("--runs", type=int, default=1, help="Number of gameplays (one session folder each)")
-    parser.add_argument("--max-moves", type=int, default=50, help="Max arrow-key actions per gameplay")
-    parser.add_argument("--headed", action="store_true", help="Show the browser window")
-    args = parser.parse_args()
-
     settings = Settings()
+
+    parser = argparse.ArgumentParser(description="AI game playtesting agent")
+    parser.add_argument(
+        "--runs", type=int, default=settings.default_runs, help="Number of gameplays (one session folder each)"
+    )
+    parser.add_argument(
+        "--max-moves",
+        type=int,
+        default=settings.default_max_moves,
+        help="Max arrow-key actions per gameplay",
+    )
+    parser.add_argument("--headed", action="store_true", default=settings.default_headed, help="Show the browser window")
+    args = parser.parse_args()
     if not settings.openai_api_key:
         raise SystemExit("OPENAI_API_KEY is required. Copy .env.example to .env")
 

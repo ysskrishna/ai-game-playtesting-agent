@@ -26,7 +26,7 @@ class VisionObserver:
         self.llm = ChatOpenAI(
             model=settings.openai_model,
             api_key=settings.openai_api_key,
-            temperature=0,
+            temperature=settings.vision_temperature,
         ).with_structured_output(BoardObservation)
 
     def observe(self, screenshot_path: Path) -> BoardObservation:

@@ -3,18 +3,25 @@
 import argparse
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 from ai_game_playtesting_agent.browser import GameBrowser
 from ai_game_playtesting_agent.config import Settings
 from ai_game_playtesting_agent.graph import build_graph
-from ai_game_playtesting_agent.sessions import new_session_dir
+from ai_game_playtesting_agent.report import write_campaign_summary
+from ai_game_playtesting_agent.sessions import new_campaign_dir, new_session_dir
 from ai_game_playtesting_agent.vision import VisionObserver
 
 
-def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
-    session_id, session_dir = new_session_dir(settings)
+def run_session(
+    settings: Settings,
+    campaign_dir: Path,
+    max_moves: int,
+    headed: bool,
+) -> Path:
+    session_id, session_dir = new_session_dir(settings, campaign_dir)
     started_at = time.time()
 
     session_meta = {
@@ -49,7 +56,7 @@ def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
                 "final_report_path": None,
             }
         )
-        return result["final_report_path"]
+        return Path(result["final_report_path"])
     finally:
         browser.close()
 
@@ -60,7 +67,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="AI game playtesting agent")
     parser.add_argument(
-        "--runs", type=int, default=settings.default_runs, help="Number of gameplays (one session folder each)"
+        "--runs", type=int, default=settings.default_runs, help="Number of gameplays in this campaign"
     )
     parser.add_argument(
         "--max-moves",
@@ -73,16 +80,29 @@ def main() -> None:
     if not settings.openai_api_key:
         raise SystemExit("OPENAI_API_KEY is required. Copy .env.example to .env")
 
-    report_paths: list[str] = []
+    campaign_id, campaign_dir = new_campaign_dir(settings)
+    campaign_started = datetime.now(timezone.utc)
+
+    print(f"Campaign: {campaign_dir}")
+
     for i in range(args.runs):
         print(f"\n--- Gameplay {i + 1}/{args.runs} ---")
-        path = run_session(settings, args.max_moves, args.headed)
-        print(f"Report: {path}")
-        report_paths.append(path)
+        json_path = run_session(settings, campaign_dir, args.max_moves, args.headed)
+        print(f"Session data: {json_path}")
 
-    print("\n=== Done ===")
-    for path in report_paths:
-        print(path)
+    campaign_meta = {
+        "campaign_id": campaign_id,
+        "started_at": campaign_started.isoformat(),
+        "ended_at": datetime.now(timezone.utc).isoformat(),
+        "game_url": settings.game_url,
+        "model": settings.openai_model,
+        "max_moves": args.max_moves,
+        "headed": args.headed,
+        "runs_requested": args.runs,
+    }
+    summary_path = write_campaign_summary(settings, campaign_dir, campaign_meta)
+
+    print(f"\n=== Done ===\nSummary: {summary_path}")
 
 
 if __name__ == "__main__":

@@ -23,8 +23,7 @@ class Settings(BaseSettings):
 
     session_id_format: str = "%Y%m%d%H%M%S"
     screenshots_dir_name: str = "screenshots"
-    logs_dir_name: str = "logs"
-    moves_log_filename: str = "moves.jsonl"
+    turn_log_filename: str = "turn_log.jsonl"
 
     page_load_timeout_ms: int = 1500
     vision_temperature: float = 0.0

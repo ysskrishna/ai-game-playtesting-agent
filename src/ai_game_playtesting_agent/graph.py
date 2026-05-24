@@ -10,7 +10,7 @@ from ai_game_playtesting_agent.browser import GameBrowser
 from ai_game_playtesting_agent.config import Settings
 from ai_game_playtesting_agent.events import detect_events, update_blocked_moves
 from ai_game_playtesting_agent.models import BoardObservation, GameEvent, Move
-from ai_game_playtesting_agent.report import write_report
+from ai_game_playtesting_agent.report import write_session_json
 from ai_game_playtesting_agent.sessions import append_jsonl
 from ai_game_playtesting_agent.vision import VisionObserver
 
@@ -40,7 +40,7 @@ def build_graph(
     session_meta: dict,
     max_moves: int,
 ):
-    moves_log = session_dir / settings.logs_dir_name / settings.moves_log_filename
+    turn_log = session_dir / settings.turn_log_filename
 
     def observe(state: PlaytestState) -> dict:
         step = state["step"]
@@ -77,7 +77,7 @@ def build_graph(
         }
         if blocked_hint:
             log_entry["blocked_moves_hint"] = blocked_hint
-        append_jsonl(moves_log, log_entry)
+        append_jsonl(turn_log, log_entry)
 
         actions_taken = state.get("actions_taken", 0)
         done = current.game_over or actions_taken >= max_moves
@@ -100,7 +100,7 @@ def build_graph(
     def report(state: PlaytestState) -> dict:
         observations = [BoardObservation.model_validate(o) for o in state.get("observations", [])]
         events = [GameEvent.model_validate(e) for e in state.get("events", [])]
-        path = write_report(
+        path = write_session_json(
             settings,
             session_dir,
             session_id,

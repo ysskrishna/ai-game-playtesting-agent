@@ -1,0 +1,95 @@
+{
+  "session_id": "20260524201909",
+  "meta": {
+    "session_id": "20260524201909",
+    "started_at": "2026-05-24T14:49:09.050636+00:00",
+    "game_url": "https://play2048.co/",
+    "model": "gpt-4o",
+    "max_moves": 20,
+    "headed": true
+  },
+  "metrics": {
+    "moves": 20,
+    "duration_seconds": 55.7,
+    "final_score": 76,
+    "best_tile": 16,
+    "reached_2048": false,
+    "game_over": false,
+    "invalid_moves": 0,
+    "stall_events": 0,
+    "vision_errors": 0
+  },
+  "events": [
+    {
+      "turn": 1,
+      "kind": "score_increased",
+      "detail": "0 -> 4"
+    },
+    {
+      "turn": 1,
+      "kind": "tile_merged",
+      "detail": "best_tile 2 -> 4"
+    },
+    {
+      "turn": 4,
+      "kind": "score_increased",
+      "detail": "4 -> 8"
+    },
+    {
+      "turn": 7,
+      "kind": "score_increased",
+      "detail": "8 -> 12"
+    },
+    {
+      "turn": 8,
+      "kind": "score_increased",
+      "detail": "12 -> 20"
+    },
+    {
+      "turn": 8,
+      "kind": "tile_merged",
+      "detail": "best_tile 4 -> 8"
+    },
+    {
+      "turn": 9,
+      "kind": "score_increased",
+      "detail": "20 -> 24"
+    },
+    {
+      "turn": 10,
+      "kind": "score_increased",
+      "detail": "24 -> 36"
+    },
+    {
+      "turn": 14,
+      "kind": "score_increased",
+      "detail": "36 -> 40"
+    },
+    {
+      "turn": 16,
+      "kind": "score_increased",
+      "detail": "40 -> 44"
+    },
+    {
+      "turn": 17,
+      "kind": "score_increased",
+      "detail": "44 -> 52"
+    },
+    {
+      "turn": 18,
+      "kind": "score_increased",
+      "detail": "52 -> 56"
+    },
+    {
+      "turn": 20,
+      "kind": "score_increased",
+      "detail": "56 -> 76"
+    },
+    {
+      "turn": 20,
+      "kind": "tile_merged",
+      "detail": "best_tile 8 -> 16"
+    }
+  ],
+  "observations_count": 21
+}

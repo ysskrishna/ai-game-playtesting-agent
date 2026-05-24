@@ -1,0 +1,115 @@
+{
+  "session_id": "20260524202057",
+  "meta": {
+    "session_id": "20260524202057",
+    "started_at": "2026-05-24T14:50:57.325488+00:00",
+    "game_url": "https://play2048.co/",
+    "model": "gpt-4o",
+    "max_moves": 20,
+    "headed": true
+  },
+  "metrics": {
+    "moves": 20,
+    "duration_seconds": 48.6,
+    "final_score": 84,
+    "best_tile": 16,
+    "reached_2048": false,
+    "game_over": false,
+    "invalid_moves": 1,
+    "stall_events": 1,
+    "vision_errors": 0
+  },
+  "events": [
+    {
+      "turn": 2,
+      "kind": "score_increased",
+      "detail": "0 -> 4"
+    },
+    {
+      "turn": 2,
+      "kind": "tile_merged",
+      "detail": "best_tile 2 -> 4"
+    },
+    {
+      "turn": 3,
+      "kind": "score_increased",
+      "detail": "4 -> 8"
+    },
+    {
+      "turn": 4,
+      "kind": "score_increased",
+      "detail": "8 -> 16"
+    },
+    {
+      "turn": 4,
+      "kind": "tile_merged",
+      "detail": "best_tile 4 -> 8"
+    },
+    {
+      "turn": 6,
+      "kind": "score_increased",
+      "detail": "16 -> 20"
+    },
+    {
+      "turn": 8,
+      "kind": "score_increased",
+      "detail": "20 -> 24"
+    },
+    {
+      "turn": 9,
+      "kind": "score_increased",
+      "detail": "24 -> 28"
+    },
+    {
+      "turn": 10,
+      "kind": "score_increased",
+      "detail": "28 -> 36"
+    },
+    {
+      "turn": 14,
+      "kind": "score_increased",
+      "detail": "36 -> 40"
+    },
+    {
+      "turn": 15,
+      "kind": "score_increased",
+      "detail": "40 -> 48"
+    },
+    {
+      "turn": 16,
+      "kind": "score_increased",
+      "detail": "48 -> 64"
+    },
+    {
+      "turn": 16,
+      "kind": "tile_merged",
+      "detail": "best_tile 8 -> 16"
+    },
+    {
+      "turn": 17,
+      "kind": "score_increased",
+      "detail": "64 -> 68"
+    },
+    {
+      "turn": 18,
+      "kind": "score_increased",
+      "detail": "68 -> 76"
+    },
+    {
+      "turn": 19,
+      "kind": "score_increased",
+      "detail": "76 -> 84"
+    },
+    {
+      "turn": 20,
+      "kind": "invalid_move",
+      "detail": "Board unchanged after last action"
+    },
+    {
+      "turn": 20,
+      "kind": "stall_loop",
+      "detail": "Repeated move 'down' with no change"
+    }
+  ],
+  "observations_count": 21
+}

@@ -1,0 +1,21 @@
+{"turn": 0, "move": "up", "score": 0, "best_tile": 2, "game_over": false, "reasoning": "Moving up will merge the two '2' tiles into a '4' tile.", "screenshot": "move_0000.jpg"}
+{"turn": 1, "move": "down", "score": 4, "best_tile": 4, "game_over": false, "reasoning": "Moving down will combine the 4 and 2 tiles, creating space for new tiles.", "screenshot": "move_0001.jpg"}
+{"turn": 2, "move": "up", "score": 4, "best_tile": 4, "game_over": false, "reasoning": "Moving up will combine the two '2' tiles into a '4' tile.", "screenshot": "move_0002.jpg"}
+{"turn": 3, "move": "down", "score": 4, "best_tile": 4, "game_over": false, "reasoning": "Moving down will merge the two '2' tiles, creating space and increasing the score.", "screenshot": "move_0003.jpg"}
+{"turn": 4, "move": "left", "score": 8, "best_tile": 4, "game_over": false, "reasoning": "Moving left will merge the 4 and 2 tiles, creating space and increasing the score.", "screenshot": "move_0004.jpg"}
+{"turn": 5, "move": "left", "score": 8, "best_tile": 4, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the top row.", "screenshot": "move_0005.jpg"}
+{"turn": 6, "move": "up", "score": 8, "best_tile": 4, "game_over": false, "reasoning": "Moving up will merge the two '2' tiles in the first column.", "screenshot": "move_0006.jpg"}
+{"turn": 7, "move": "left", "score": 12, "best_tile": 4, "game_over": false, "reasoning": "Moving left will merge the two '4' tiles into an '8' tile.", "screenshot": "move_0007.jpg"}
+{"turn": 8, "move": "down", "score": 20, "best_tile": 8, "game_over": false, "reasoning": "Moving down will merge the two '2' tiles in the first column.", "screenshot": "move_0008.jpg"}
+{"turn": 9, "move": "down", "score": 24, "best_tile": 8, "game_over": false, "reasoning": "Moving down will merge the two '2' tiles in the bottom row.", "screenshot": "move_0009.jpg"}
+{"turn": 10, "move": "right", "score": 36, "best_tile": 8, "game_over": false, "reasoning": "Moving right will merge the two '8' tiles and create space.", "screenshot": "move_0010.jpg"}
+{"turn": 11, "move": "left", "score": 36, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the bottom row.", "screenshot": "move_0011.jpg"}
+{"turn": 12, "move": "left", "score": 36, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the bottom row.", "screenshot": "move_0012.jpg"}
+{"turn": 13, "move": "left", "score": 36, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the bottom row.", "screenshot": "move_0013.jpg"}
+{"turn": 14, "move": "left", "score": 40, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the bottom row and keep the board more organized.", "screenshot": "move_0014.jpg"}
+{"turn": 15, "move": "left", "score": 40, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the top row and keep the board organized.", "screenshot": "move_0015.jpg"}
+{"turn": 16, "move": "down", "score": 44, "best_tile": 8, "game_over": false, "reasoning": "Moving down will merge the two '4' tiles in the first column.", "screenshot": "move_0016.jpg"}
+{"turn": 17, "move": "left", "score": 52, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '2' tiles in the third row and create space.", "screenshot": "move_0017.jpg"}
+{"turn": 18, "move": "left", "score": 56, "best_tile": 8, "game_over": false, "reasoning": "Moving left will merge the two '8' tiles in the first column.", "screenshot": "move_0018.jpg"}
+{"turn": 19, "move": "down", "score": 56, "best_tile": 8, "game_over": false, "reasoning": "Moving down will merge the two '8' tiles in the first column.", "screenshot": "move_0019.jpg"}
+{"turn": 20, "move": "right", "score": 76, "best_tile": 16, "game_over": false, "reasoning": "Moving right will merge the two '2' tiles in the top row and create space.", "screenshot": "move_0020.jpg"}

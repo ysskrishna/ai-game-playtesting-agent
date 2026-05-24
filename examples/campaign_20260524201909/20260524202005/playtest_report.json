@@ -1,0 +1,105 @@
+{
+  "session_id": "20260524202005",
+  "meta": {
+    "session_id": "20260524202005",
+    "started_at": "2026-05-24T14:50:05.084105+00:00",
+    "game_url": "https://play2048.co/",
+    "model": "gpt-4o",
+    "max_moves": 20,
+    "headed": true
+  },
+  "metrics": {
+    "moves": 20,
+    "duration_seconds": 51.9,
+    "final_score": 80,
+    "best_tile": 16,
+    "reached_2048": false,
+    "game_over": false,
+    "invalid_moves": 1,
+    "stall_events": 1,
+    "vision_errors": 0
+  },
+  "events": [
+    {
+      "turn": 3,
+      "kind": "score_increased",
+      "detail": "0 -> 4"
+    },
+    {
+      "turn": 4,
+      "kind": "score_increased",
+      "detail": "4 -> 12"
+    },
+    {
+      "turn": 4,
+      "kind": "tile_merged",
+      "detail": "best_tile 4 -> 8"
+    },
+    {
+      "turn": 6,
+      "kind": "score_increased",
+      "detail": "12 -> 16"
+    },
+    {
+      "turn": 7,
+      "kind": "score_increased",
+      "detail": "16 -> 20"
+    },
+    {
+      "turn": 9,
+      "kind": "score_increased",
+      "detail": "20 -> 24"
+    },
+    {
+      "turn": 11,
+      "kind": "score_increased",
+      "detail": "24 -> 32"
+    },
+    {
+      "turn": 12,
+      "kind": "score_increased",
+      "detail": "32 -> 52"
+    },
+    {
+      "turn": 12,
+      "kind": "tile_merged",
+      "detail": "best_tile 8 -> 16"
+    },
+    {
+      "turn": 13,
+      "kind": "score_increased",
+      "detail": "52 -> 60"
+    },
+    {
+      "turn": 15,
+      "kind": "score_increased",
+      "detail": "60 -> 64"
+    },
+    {
+      "turn": 16,
+      "kind": "score_increased",
+      "detail": "64 -> 68"
+    },
+    {
+      "turn": 17,
+      "kind": "score_increased",
+      "detail": "68 -> 76"
+    },
+    {
+      "turn": 18,
+      "kind": "score_increased",
+      "detail": "76 -> 80"
+    },
+    {
+      "turn": 20,
+      "kind": "invalid_move",
+      "detail": "Board unchanged after last action"
+    },
+    {
+      "turn": 20,
+      "kind": "stall_loop",
+      "detail": "Repeated move 'left' with no change"
+    }
+  ],
+  "observations_count": 21
+}

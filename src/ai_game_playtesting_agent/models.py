@@ -15,7 +15,6 @@ class BoardObservation(BaseModel):
     won_2048: bool = False
     move: Move
     reasoning: str = ""
-    confidence: Literal["high", "medium", "low"] = "medium"
 
 
 class GameEvent(BaseModel):

@@ -16,7 +16,6 @@ Read ONLY the image. Return structured data:
 - won_2048: true if a 2048 tile exists or a win banner is shown
 - move: one of up, down, left, right. Use restart ONLY when game_over is true.
 - reasoning: one short sentence for your chosen move
-- confidence: high, medium, or low
 
 Pick a legal move that tries to merge tiles and keep the board playable. Prefer keeping the largest tile in a corner."""
 

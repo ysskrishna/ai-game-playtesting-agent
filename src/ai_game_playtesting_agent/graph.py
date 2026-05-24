@@ -59,7 +59,6 @@ def build_graph(
                 grid=[[0] * size for _ in range(size)],
                 move=settings.vision_fallback_move,
                 reasoning="vision error fallback",
-                confidence="low",
             )
 
         append_jsonl(
@@ -71,7 +70,6 @@ def build_graph(
                 "best_tile": current.best_tile,
                 "game_over": current.game_over,
                 "reasoning": current.reasoning,
-                "confidence": current.confidence,
                 "screenshot": shot_path.name,
             },
         )

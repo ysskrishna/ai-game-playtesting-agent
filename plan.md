@@ -271,7 +271,6 @@ Structured JSON from GPT-4o per turn:
   "game_over": false,
   "won_2048": false,
   "move": "left",
-  "confidence": "high",
   "reasoning": "merge left column 8s"
 }
 ```

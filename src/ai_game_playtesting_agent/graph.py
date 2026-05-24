@@ -7,12 +7,12 @@ from typing import Annotated, Literal, TypedDict
 
 from langgraph.graph import END, StateGraph
 
-from playtesting_agent.browser import GameBrowser
-from playtesting_agent.events import detect_events
-from playtesting_agent.models import BoardObservation, GameEvent
-from playtesting_agent.report import write_report
-from playtesting_agent.sessions import append_jsonl
-from playtesting_agent.vision import VisionObserver
+from ai_game_playtesting_agent.browser import GameBrowser
+from ai_game_playtesting_agent.events import detect_events
+from ai_game_playtesting_agent.models import BoardObservation, GameEvent
+from ai_game_playtesting_agent.report import write_report
+from ai_game_playtesting_agent.sessions import append_jsonl
+from ai_game_playtesting_agent.vision import VisionObserver
 
 
 class PlaytestState(TypedDict):

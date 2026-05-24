@@ -1,4 +1,4 @@
-# AI 2048 Playtesting Agent
+# AI Game Playtesting Agent
 
 Autonomous agent that plays [2048](https://play2048.co/) in a real browser, reads the board with **GPT-4o vision**, and writes a structured playtesting report per session.
 
@@ -65,7 +65,7 @@ artifacts/20250524143022/
 ## Project layout
 
 ```
-src/playtesting_agent/
+src/ai_game_playtesting_agent/
   main.py       # CLI entry
   graph.py      # LangGraph nodes and edges
   browser.py    # Playwright control

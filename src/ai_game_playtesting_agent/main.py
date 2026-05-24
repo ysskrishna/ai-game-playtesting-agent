@@ -1,4 +1,4 @@
-"""CLI: run one or more 2048 playtesting sessions."""
+"""CLI: run one or more AI game playtesting sessions."""
 
 import argparse
 import time
@@ -6,11 +6,11 @@ from datetime import datetime, timezone
 
 from dotenv import load_dotenv
 
-from playtesting_agent.browser import GameBrowser
-from playtesting_agent.config import Settings
-from playtesting_agent.graph import build_graph
-from playtesting_agent.sessions import new_session_dir, write_session_meta
-from playtesting_agent.vision import VisionObserver
+from ai_game_playtesting_agent.browser import GameBrowser
+from ai_game_playtesting_agent.config import Settings
+from ai_game_playtesting_agent.graph import build_graph
+from ai_game_playtesting_agent.sessions import new_session_dir, write_session_meta
+from ai_game_playtesting_agent.vision import VisionObserver
 
 
 def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
@@ -59,7 +59,7 @@ def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
 
 def main() -> None:
     load_dotenv()
-    parser = argparse.ArgumentParser(description="Autonomous 2048 playtesting agent")
+    parser = argparse.ArgumentParser(description="AI game playtesting agent")
     parser.add_argument("--runs", type=int, default=1, help="Number of gameplays (one session folder each)")
     parser.add_argument("--max-moves", type=int, default=50, help="Max arrow-key actions per gameplay")
     parser.add_argument("--headed", action="store_true", help="Show the browser window")

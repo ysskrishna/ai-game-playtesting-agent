@@ -1,4 +1,4 @@
-from playtesting_agent.models import BoardObservation, GameEvent
+from ai_game_playtesting_agent.models import BoardObservation, GameEvent
 
 
 def grids_equal(a: list[list[int]], b: list[list[int]]) -> bool:

@@ -2,8 +2,8 @@ from pathlib import Path
 
 from playwright.sync_api import Browser, Page, Playwright, sync_playwright
 
-from playtesting_agent.config import Settings
-from playtesting_agent.models import Move
+from ai_game_playtesting_agent.config import Settings
+from ai_game_playtesting_agent.models import Move
 
 KEY_MAP: dict[Move, str] = {
     "up": "ArrowUp",

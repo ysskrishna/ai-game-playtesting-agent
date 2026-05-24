@@ -1,7 +1,7 @@
 [project]
-name = "playtesting-agent"
+name = "ai-game-playtesting-agent"
 version = "0.1.0"
-description = "Autonomous 2048 playtesting agent with GPT-4o vision and LangGraph"
+description = "AI browser game playtesting agent with GPT-4o vision and LangGraph"
 readme = "README.md"
 authors = [
     { name = "ysskrishna", email = "sivasaikrishnassk@gmail.com" }
@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-playtest = "playtesting_agent.main:main"
+playtest = "ai_game_playtesting_agent.main:main"
 
 [build-system]
 requires = ["uv_build>=0.9.13,<0.10.0"]

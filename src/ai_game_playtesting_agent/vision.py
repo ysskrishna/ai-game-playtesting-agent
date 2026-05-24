@@ -4,8 +4,8 @@ from pathlib import Path
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
-from playtesting_agent.config import Settings
-from playtesting_agent.models import BoardObservation
+from ai_game_playtesting_agent.config import Settings
+from ai_game_playtesting_agent.models import BoardObservation
 
 SYSTEM_PROMPT = """You are playtesting the browser game 2048 from a screenshot.
 

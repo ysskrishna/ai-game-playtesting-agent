@@ -5,9 +5,9 @@ from pathlib import Path
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
-from playtesting_agent.config import Settings
-from playtesting_agent.models import BoardObservation, GameEvent, SessionMetrics
-from playtesting_agent.sessions import append_jsonl
+from ai_game_playtesting_agent.config import Settings
+from ai_game_playtesting_agent.models import BoardObservation, GameEvent, SessionMetrics
+from ai_game_playtesting_agent.sessions import append_jsonl
 
 SYNTHESIS_PROMPT = """You are a game playtesting analyst. Write concise markdown sections based on session logs.
 Use bullet points. Be specific and grounded in the data provided. Do not invent metrics."""

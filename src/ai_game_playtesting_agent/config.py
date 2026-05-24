@@ -23,6 +23,7 @@ class Settings(BaseSettings):
 
     session_id_format: str = "%Y%m%d%H%M%S"
     screenshots_dir_name: str = "screenshots"
+    screenshot_jpeg_quality: int = Field(default=90, ge=0, le=100)
     turn_log_filename: str = "turn_log.jsonl"
 
     page_load_timeout_ms: int = 1500

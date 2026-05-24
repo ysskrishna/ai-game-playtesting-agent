@@ -44,7 +44,7 @@ def build_graph(
 
     def observe(state: PlaytestState) -> dict:
         step = state["step"]
-        shot_path = session_dir / settings.screenshots_dir_name / f"move_{step:04d}.png"
+        shot_path = session_dir / settings.screenshots_dir_name / f"move_{step:04d}.jpg"
         browser.screenshot(shot_path)
 
         # Board before the action we just applied: last observe's `current`, not `previous`.

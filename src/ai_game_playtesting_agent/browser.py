@@ -51,7 +51,12 @@ class GameBrowser:
     def screenshot(self, path: Path) -> None:
         assert self.page is not None
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.page.screenshot(path=str(path), full_page=False)
+        self.page.screenshot(
+            path=str(path),
+            type="jpeg",
+            quality=self.settings.screenshot_jpeg_quality,
+            full_page=False,
+        )
 
     def press_move(self, move: Move) -> None:
         assert self.page is not None

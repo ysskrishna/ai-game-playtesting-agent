@@ -21,26 +21,33 @@ Edit `.env` and set `OPENAI_API_KEY`. The CLI exits with an error if the key is 
 
 ## Architecture
 
-Each `uv run playtest` call creates one **campaign** folder. Inside the campaign, each gameplay is a **session** with its own logs and screenshots. A LangGraph loop drives each session: screenshot, vision, arrow key, repeat until game over or `--max-moves`, then write session JSON. After all sessions finish, the agent writes one campaign summary markdown file.
+The agent is a Python package run with **uv**. **LangGraph** orchestrates each gameplay; **Playwright** controls the browser; **GPT-4o** reads screenshots (vision-only, no DOM parsing) and writes qualitative report sections.
+
+| Piece | Technology | Role |
+| --- | --- | --- |
+| Runtime & CLI | [uv](https://docs.astral.sh/uv/) + Python 3.12 | Install deps, run `playtest`, load `.env` |
+| Orchestration | [LangGraph](https://langchain-ai.github.io/langgraph/) | Per-session state machine: observe → act → … → report |
+| Browser | [Playwright](https://playwright.dev/python/) | Open 2048 in Chromium, arrow keys, JPEG screenshots |
+| Perception & decisions | GPT-4o via `langchain-openai` | Structured JSON from each screenshot (grid, score, move) |
+| Report synthesis | GPT-4o (text) | Campaign summary sections from session metrics |
+| Schemas & config | Pydantic + `pydantic-settings` | `BoardObservation`, events, settings from `.env` |
+
+**Game:** [play2048.co](https://play2048.co/) in the browser. **State:** screenshot → vision model (not DOM/canvas hooks). **Artifacts:** timestamped folders under `artifacts/campaign_<id>/` (see [Project layout](#project-layout)).
 
 ```mermaid
-flowchart TD
-  CLI[main.py CLI] --> Campaign[new_campaign_dir]
-  Campaign --> Loop{for each run}
-  Loop --> Session[new_session_dir]
-  Session --> Browser[GameBrowser Playwright]
-  Session --> Graph[LangGraph build_graph]
-  Graph --> Observe[observe: screenshot + GPT-4o vision]
-  Observe --> Route{game over or max moves?}
-  Route -->|no| Act[act: press arrow key]
-  Act --> Observe
-  Route -->|yes| SessionReport[report: playtest_report.json]
-  Loop --> Summary[write_campaign_summary: playtest_summary.md]
+flowchart TB
+  CLI[uv run playtest] --> Campaign[campaign folder]
+  Campaign --> Loop{more gameplays?}
+  Loop -->|yes| Session[session folder + LangGraph]
+  Session --> PlayLoop[observe + act until done]
+  PlayLoop --> SessionReport[report: playtest_report.json]
+  SessionReport --> Loop
+  Loop -->|no| Summary[playtest_summary.md]
 ```
 
-A session stops when the vision model reports **game over** or when **actions taken** reach `--max-moves`.
+Within each session, LangGraph repeats **observe** (screenshot + vision) and **act** (press move) until game over or `--max-moves`, then runs **report**. The CLI runs that graph once per `--runs`, then aggregates metrics into one campaign markdown file.
 
-Optional design notes: [initial_plan.md](initial_plan.md).
+More detail: [initial_plan.md](initial_plan.md).
 
 ## Reproduce a run
 

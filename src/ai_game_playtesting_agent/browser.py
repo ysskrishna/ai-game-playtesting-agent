@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from playwright.sync_api import Browser, Page, Playwright, sync_playwright
+from playwright.sync_api import Browser, Page, Playwright, TimeoutError, sync_playwright
 
 from ai_game_playtesting_agent.config import Settings
 from ai_game_playtesting_agent.models import Move
@@ -31,6 +31,22 @@ class GameBrowser:
         )
         self.page.goto(self.settings.game_url, wait_until="domcontentloaded")
         self.page.wait_for_timeout(self.settings.page_load_timeout_ms)
+        self.dismiss_welcome_tooltip()
+
+    def dismiss_welcome_tooltip(self) -> bool:
+        """Close the play2048.co welcome banner so score and board are visible."""
+        assert self.page is not None
+        tooltip = self.page.locator(".tooltip-material").filter(has_text="Welcome to 2048")
+        try:
+            tooltip.first.wait_for(state="visible", timeout=self.settings.page_load_timeout_ms)
+        except TimeoutError:
+            return False
+
+        close_button = tooltip.locator("button.rounded-full")
+        close_button.first.click()
+        tooltip.first.wait_for(state="hidden", timeout=self.settings.page_load_timeout_ms)
+        self.page.wait_for_timeout(self.settings.animation_ms)
+        return True
 
     def screenshot(self, path: Path) -> None:
         assert self.page is not None
@@ -60,6 +76,7 @@ class GameBrowser:
                 return
         self.page.reload(wait_until="domcontentloaded")
         self.page.wait_for_timeout(self.settings.page_load_timeout_ms)
+        self.dismiss_welcome_tooltip()
 
     def close(self) -> None:
         if self._browser:

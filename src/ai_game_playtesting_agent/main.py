@@ -40,11 +40,11 @@ def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
                 "actions_taken": 0,
                 "max_moves": max_moves,
                 "current": None,
-                "previous": None,
                 "events": [],
                 "observations": [],
                 "done": False,
                 "vision_errors": 0,
+                "blocked_moves": [],
                 "started_at": started_at,
                 "final_report_path": None,
             }

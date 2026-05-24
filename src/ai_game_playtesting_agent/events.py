@@ -1,8 +1,39 @@
-from ai_game_playtesting_agent.models import BoardObservation, GameEvent
+from ai_game_playtesting_agent.models import BoardObservation, GameEvent, Move
 
 
 def grids_equal(a: list[list[int]], b: list[list[int]]) -> bool:
     return a == b
+
+
+def board_changed(previous: BoardObservation, current: BoardObservation) -> bool:
+    return current.score > previous.score or not grids_equal(previous.grid, current.grid)
+
+
+def update_blocked_moves(
+    blocked_moves: list[Move],
+    previous: BoardObservation | None,
+    current: BoardObservation,
+    new_events: list[GameEvent],
+) -> list[Move]:
+    """Track directions that had no effect; cleared after a successful action."""
+    if previous is None:
+        return []
+
+    if board_changed(previous, current):
+        return []
+
+    failed_kinds = {"invalid_move", "stall_loop"}
+    if not any(e.kind in failed_kinds for e in new_events):
+        return list(blocked_moves)
+
+    failed_move = previous.move
+    if failed_move == "restart":
+        return list(blocked_moves)
+
+    updated = list(blocked_moves)
+    if failed_move not in updated:
+        updated.append(failed_move)
+    return updated
 
 
 def detect_events(

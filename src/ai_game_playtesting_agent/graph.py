@@ -8,8 +8,8 @@ from langgraph.graph import END, StateGraph
 
 from ai_game_playtesting_agent.browser import GameBrowser
 from ai_game_playtesting_agent.config import Settings
-from ai_game_playtesting_agent.events import detect_events
-from ai_game_playtesting_agent.models import BoardObservation, GameEvent
+from ai_game_playtesting_agent.events import detect_events, update_blocked_moves
+from ai_game_playtesting_agent.models import BoardObservation, GameEvent, Move
 from ai_game_playtesting_agent.report import write_report
 from ai_game_playtesting_agent.sessions import append_jsonl
 from ai_game_playtesting_agent.vision import VisionObserver
@@ -22,11 +22,11 @@ class PlaytestState(TypedDict):
     actions_taken: int
     max_moves: int
     current: dict | None
-    previous: dict | None
     events: Annotated[list[dict], operator.add]
     observations: Annotated[list[dict], operator.add]
     done: bool
     vision_errors: int
+    blocked_moves: list[str]
     started_at: float
     final_report_path: str | None
 
@@ -47,11 +47,13 @@ def build_graph(
         shot_path = session_dir / settings.screenshots_dir_name / f"move_{step:04d}.png"
         browser.screenshot(shot_path)
 
-        previous = BoardObservation.model_validate(state["previous"]) if state.get("previous") else None
+        # Board before the action we just applied: last observe's `current`, not `previous`.
+        before_action = BoardObservation.model_validate(state["current"]) if state.get("current") else None
         vision_errors = state.get("vision_errors", 0)
+        blocked_hint: list[Move] = list(state.get("blocked_moves") or [])
 
         try:
-            current = observer.observe(shot_path)
+            current = observer.observe(shot_path, blocked_moves=blocked_hint or None)
         except Exception:
             vision_errors += 1
             size = settings.vision_fallback_grid_size
@@ -61,20 +63,21 @@ def build_graph(
                 reasoning="vision error fallback",
             )
 
-        append_jsonl(
-            moves_log,
-            {
-                "turn": step,
-                "move": current.move,
-                "score": current.score,
-                "best_tile": current.best_tile,
-                "game_over": current.game_over,
-                "reasoning": current.reasoning,
-                "screenshot": shot_path.name,
-            },
-        )
+        new_events = detect_events(step, before_action, current)
+        blocked_moves = update_blocked_moves(blocked_hint, before_action, current, new_events)
 
-        new_events = detect_events(step, previous, current)
+        log_entry: dict = {
+            "turn": step,
+            "move": current.move,
+            "score": current.score,
+            "best_tile": current.best_tile,
+            "game_over": current.game_over,
+            "reasoning": current.reasoning,
+            "screenshot": shot_path.name,
+        }
+        if blocked_hint:
+            log_entry["blocked_moves_hint"] = blocked_hint
+        append_jsonl(moves_log, log_entry)
 
         actions_taken = state.get("actions_taken", 0)
         done = current.game_over or actions_taken >= max_moves
@@ -82,11 +85,11 @@ def build_graph(
         return {
             "step": step + 1,
             "current": current.model_dump(),
-            "previous": state.get("current"),
             "events": [e.model_dump() for e in new_events],
             "observations": [current.model_dump()],
             "done": done,
             "vision_errors": vision_errors,
+            "blocked_moves": blocked_moves,
         }
 
     def act(state: PlaytestState) -> dict:

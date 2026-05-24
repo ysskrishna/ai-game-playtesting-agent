@@ -22,11 +22,6 @@ def new_session_dir(settings: Settings) -> tuple[str, Path]:
     return session_id, session_dir
 
 
-def write_session_meta(session_dir: Path, meta: dict) -> None:
-    path = session_dir / "session_meta.json"
-    path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
-
-
 def append_jsonl(path: Path, record: dict) -> None:
     with path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record) + "\n")

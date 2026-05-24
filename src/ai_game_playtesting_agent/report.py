@@ -7,8 +7,6 @@ from langchain_openai import ChatOpenAI
 
 from ai_game_playtesting_agent.config import Settings
 from ai_game_playtesting_agent.models import BoardObservation, GameEvent, SessionMetrics
-from ai_game_playtesting_agent.sessions import append_jsonl
-
 SYNTHESIS_PROMPT = """You are a game playtesting analyst. Write concise markdown sections based on session logs.
 Use bullet points. Be specific and grounded in the data provided. Do not invent metrics."""
 
@@ -75,6 +73,7 @@ def write_report(
     settings: Settings,
     session_dir: Path,
     session_id: str,
+    session_meta: dict,
     observations: list[BoardObservation],
     events: list[GameEvent],
     started_at: float,
@@ -130,7 +129,7 @@ def write_report(
     logs = settings.logs_dir_name
     body += (
         f"\n{qualitative}\n\n---\n\n"
-        f"Full logs: `{logs}/{settings.moves_log_filename}`, `{logs}/{settings.events_log_filename}`\n"
+        f"Full move log: `{logs}/{settings.moves_log_filename}`\n"
     )
 
     md_path = session_dir / "playtest_report.md"
@@ -141,6 +140,7 @@ def write_report(
         json.dumps(
             {
                 "session_id": session_id,
+                "meta": session_meta,
                 "metrics": metrics.model_dump(),
                 "events": [e.model_dump() for e in events],
                 "observations_count": len(observations),
@@ -148,11 +148,6 @@ def write_report(
             indent=2,
         ),
         encoding="utf-8",
-    )
-
-    append_jsonl(
-        session_dir / settings.logs_dir_name / settings.report_log_filename,
-        {"session_id": session_id, "report": str(md_path.name), "metrics": metrics.model_dump()},
     )
 
     return md_path

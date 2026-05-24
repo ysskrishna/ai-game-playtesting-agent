@@ -37,10 +37,10 @@ def build_graph(
     settings: Settings,
     session_dir: Path,
     session_id: str,
+    session_meta: dict,
     max_moves: int,
 ):
     moves_log = session_dir / settings.logs_dir_name / settings.moves_log_filename
-    events_log = session_dir / settings.logs_dir_name / settings.events_log_filename
 
     def observe(state: PlaytestState) -> dict:
         step = state["step"]
@@ -77,8 +77,6 @@ def build_graph(
         )
 
         new_events = detect_events(step, previous, current)
-        for event in new_events:
-            append_jsonl(events_log, event.model_dump())
 
         actions_taken = state.get("actions_taken", 0)
         done = current.game_over or actions_taken >= max_moves
@@ -105,6 +103,7 @@ def build_graph(
             settings,
             session_dir,
             session_id,
+            session_meta,
             observations,
             events,
             state["started_at"],

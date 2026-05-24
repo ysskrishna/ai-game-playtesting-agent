@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from ai_game_playtesting_agent.browser import GameBrowser
 from ai_game_playtesting_agent.config import Settings
 from ai_game_playtesting_agent.graph import build_graph
-from ai_game_playtesting_agent.sessions import new_session_dir, write_session_meta
+from ai_game_playtesting_agent.sessions import new_session_dir
 from ai_game_playtesting_agent.vision import VisionObserver
 
 
@@ -17,24 +17,21 @@ def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
     session_id, session_dir = new_session_dir(settings)
     started_at = time.time()
 
-    write_session_meta(
-        session_dir,
-        {
-            "session_id": session_id,
-            "started_at": datetime.now(timezone.utc).isoformat(),
-            "game_url": settings.game_url,
-            "model": settings.openai_model,
-            "max_moves": max_moves,
-            "headed": headed,
-        },
-    )
+    session_meta = {
+        "session_id": session_id,
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "game_url": settings.game_url,
+        "model": settings.openai_model,
+        "max_moves": max_moves,
+        "headed": headed,
+    }
 
     browser = GameBrowser(settings, headed=headed)
     observer = VisionObserver(settings)
 
     try:
         browser.start()
-        app = build_graph(browser, observer, settings, session_dir, session_id, max_moves)
+        app = build_graph(browser, observer, settings, session_dir, session_id, session_meta, max_moves)
         result = app.invoke(
             {
                 "session_id": session_id,

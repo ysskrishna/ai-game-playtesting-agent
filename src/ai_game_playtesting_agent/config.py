@@ -25,8 +25,6 @@ class Settings(BaseSettings):
     screenshots_dir_name: str = "screenshots"
     logs_dir_name: str = "logs"
     moves_log_filename: str = "moves.jsonl"
-    events_log_filename: str = "events.jsonl"
-    report_log_filename: str = "report.jsonl"
 
     page_load_timeout_ms: int = 1500
     vision_temperature: float = 0.0

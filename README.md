@@ -48,12 +48,10 @@ Each gameplay creates:
 
 ```
 artifacts/20250524143022/
-  session_meta.json
   screenshots/move_0000.png ...
   logs/moves.jsonl
-  logs/events.jsonl
   playtest_report.md
-  playtest_report.json
+  playtest_report.json   # meta, metrics, events
 ```
 
 ## Environment variables

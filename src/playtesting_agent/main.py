@@ -1,0 +1,85 @@
+"""CLI: run one or more 2048 playtesting sessions."""
+
+import argparse
+import time
+from datetime import datetime, timezone
+
+from dotenv import load_dotenv
+
+from playtesting_agent.browser import GameBrowser
+from playtesting_agent.config import Settings
+from playtesting_agent.graph import build_graph
+from playtesting_agent.sessions import new_session_dir, write_session_meta
+from playtesting_agent.vision import VisionObserver
+
+
+def run_session(settings: Settings, max_moves: int, headed: bool) -> str:
+    session_id, session_dir = new_session_dir(settings.artifacts_root)
+    started_at = time.time()
+
+    write_session_meta(
+        session_dir,
+        {
+            "session_id": session_id,
+            "started_at": datetime.now(timezone.utc).isoformat(),
+            "game_url": settings.game_url,
+            "model": settings.openai_model,
+            "max_moves": max_moves,
+            "headed": headed,
+        },
+    )
+
+    browser = GameBrowser(settings, headed=headed)
+    observer = VisionObserver(settings)
+
+    try:
+        browser.start()
+        app = build_graph(browser, observer, settings, session_dir, session_id, max_moves)
+        result = app.invoke(
+            {
+                "session_id": session_id,
+                "session_dir": str(session_dir),
+                "step": 0,
+                "actions_taken": 0,
+                "max_moves": max_moves,
+                "current": None,
+                "previous": None,
+                "events": [],
+                "observations": [],
+                "done": False,
+                "vision_errors": 0,
+                "started_at": started_at,
+                "final_report_path": None,
+            }
+        )
+        return result["final_report_path"]
+    finally:
+        browser.close()
+
+
+def main() -> None:
+    load_dotenv()
+    parser = argparse.ArgumentParser(description="Autonomous 2048 playtesting agent")
+    parser.add_argument("--runs", type=int, default=1, help="Number of gameplays (one session folder each)")
+    parser.add_argument("--max-moves", type=int, default=50, help="Max arrow-key actions per gameplay")
+    parser.add_argument("--headed", action="store_true", help="Show the browser window")
+    args = parser.parse_args()
+
+    settings = Settings()
+    if not settings.openai_api_key:
+        raise SystemExit("OPENAI_API_KEY is required. Copy .env.example to .env")
+
+    report_paths: list[str] = []
+    for i in range(args.runs):
+        print(f"\n--- Gameplay {i + 1}/{args.runs} ---")
+        path = run_session(settings, args.max_moves, args.headed)
+        print(f"Report: {path}")
+        report_paths.append(path)
+
+    print("\n=== Done ===")
+    for path in report_paths:
+        print(path)
+
+
+if __name__ == "__main__":
+    main()

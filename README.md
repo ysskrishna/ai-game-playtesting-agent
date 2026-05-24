@@ -16,6 +16,8 @@ CLI (main.py)
 
 **LangGraph** runs a small loop: screenshot → vision → arrow key → repeat until game over or `--max-moves`. Each gameplay is an isolated **session folder** with screenshots, JSONL logs, and `playtest_report.md`.
 
+For the design plan (architecture, LangGraph nodes, artifact layout), see [plan.md](plan.md).
+
 ## Setup
 
 ```bash

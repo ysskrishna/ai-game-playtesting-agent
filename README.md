@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/github/license/ysskrishna/ai-game-playing-agent)](https://github.com/ysskrishna/ai-game-playing-agent/blob/main/LICENSE) [![Python](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](https://www.python.org/) [![LangGraph](https://img.shields.io/badge/LangGraph-orchestration-1C3C3C)](https://langchain-ai.github.io/langgraph/) [![GPT-4o](https://img.shields.io/badge/GPT--4o-vision-412991)](https://platform.openai.com/docs/models/gpt-4o) [![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
 
-Autonomous agent that plays [2048](https://play2048.co/) in Chromium via Playwright, reads the board with **GPT-4o vision**, and writes a structured playtesting report for each campaign.
+Autonomous AI agent playtests [2048](https://play2048.co/) in Chromium via Playwright: **GPT-4o vision** reads the board from screenshots, LangGraph orchestrates sessions, and each campaign gets a structured playtesting report with metrics and turn logs. 
 
 <p align="center">
   <img src="media/og.webp" alt="AI Game Playtesting Agent — 2048 playtesting preview" width="800">

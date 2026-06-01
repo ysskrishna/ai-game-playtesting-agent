@@ -1,5 +1,7 @@
 # AI Game Playtesting Agent
 
+[![License: MIT](https://img.shields.io/github/license/ysskrishna/ai-game-playing-agent)](https://github.com/ysskrishna/ai-game-playing-agent/blob/main/LICENSE) [![Python](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](https://www.python.org/) [![LangGraph](https://img.shields.io/badge/LangGraph-orchestration-1C3C3C)](https://langchain-ai.github.io/langgraph/) [![GPT-4o](https://img.shields.io/badge/GPT--4o-vision-412991)](https://platform.openai.com/docs/models/gpt-4o) [![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
+
 Autonomous agent that plays [2048](https://play2048.co/) in Chromium via Playwright, reads the board with **GPT-4o vision**, and writes a structured playtesting report for each campaign.
 
 ## Setup
@@ -46,8 +48,6 @@ flowchart TB
 ```
 
 Within each session, LangGraph repeats **observe** (screenshot + vision) and **act** (press move) until game over or `--max-moves`, then runs **report**. The CLI runs that graph once per `--runs`, then aggregates metrics into one campaign markdown file.
-
-More detail: [initial_plan.md](initial_plan.md).
 
 ## Reproduce a run
 
@@ -119,3 +119,25 @@ Each move uses one GPT-4o vision call. A 50-move game uses about 50 vision reque
 - Vision-only: no DOM parsing; occasional misreads are logged as vision errors or events.
 - Depends on play2048.co layout and availability.
 - Not tuned to play optimally — focused on playtesting and observation.
+
+## Support
+
+If you find this project helpful:
+
+- ⭐ Star the repository
+- 🐛 Report issues
+- 🔀 Submit pull requests
+- 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
+
+## License
+
+MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](https://github.com/ysskrishna/ai-game-playing-agent/blob/main/LICENSE) for details.
+
+---
+
+<p align="left">
+  <a href="https://github.com/ysskrishna">Author's GitHub</a> •
+  <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
+  <a href="https://ysskrishna.space">Author's site</a> •
+  <a href="https://github.com/ysskrishna/ai-game-playing-agent/issues">Report Issues</a>
+</p>

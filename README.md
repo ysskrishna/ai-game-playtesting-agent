@@ -4,6 +4,10 @@
 
 Autonomous agent that plays [2048](https://play2048.co/) in Chromium via Playwright, reads the board with **GPT-4o vision**, and writes a structured playtesting report for each campaign.
 
+<p align="center">
+  <img src="media/og.webp" alt="AI Game Playtesting Agent — 2048 playtesting preview" width="800">
+</p>
+
 ## Setup
 
 **Prerequisites**

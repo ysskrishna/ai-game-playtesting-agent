@@ -1,12 +1,22 @@
 [project]
 name = "ai-game-playtesting-agent"
-version = "0.1.0"
+version = "1.0.0"
 description = "AI browser game playtesting agent with GPT-4o vision and LangGraph"
 readme = "README.md"
 authors = [
     { name = "ysskrishna", email = "sivasaikrishnassk@gmail.com" }
 ]
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
+keywords = [
+    "langgraph",
+    "playwright",
+    "gpt-4o",
+    "playtesting",
+    "2048",
+    "vision",
+]
 dependencies = [
     "langgraph>=0.2",
     "langchain-openai>=0.3",
@@ -16,6 +26,11 @@ dependencies = [
     "pydantic-settings>=2.0",
     "python-dotenv>=1.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/ysskrishna/ai-game-playing-agent"
+Repository = "https://github.com/ysskrishna/ai-game-playing-agent"
+Issues = "https://github.com/ysskrishna/ai-game-playing-agent/issues"
 
 [project.scripts]
 playtest = "ai_game_playtesting_agent.main:main"

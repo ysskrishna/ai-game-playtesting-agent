@@ -124,18 +124,26 @@ Each move uses one GPT-4o vision call. A 50-move game uses about 50 vision reque
 - Depends on play2048.co layout and availability.
 - Not tuned to play optimally — focused on playtesting and observation.
 
+## Built and maintained by
+
+AI Game Playtesting Agent is built and maintained by:
+
+| | Name | GitHub | Role |
+|---|------|--------|------|
+| <img src="https://github.com/ysskrishna.png?size=120" width="60" height="60" alt="Y. Siva Sai Krishna"> | **Y. Siva Sai Krishna** | [@ysskrishna](https://github.com/ysskrishna) | Creator |
+
 ## Support
 
 If you find this project helpful:
 
 - ⭐ Star the repository
-- 🐛 Report issues
+- 🐛 [Report issues](https://github.com/ysskrishna/ai-game-playtesting-agent/issues)
 - 🔀 Submit pull requests
 - 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
 
 ## License
 
-MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](https://github.com/ysskrishna/ai-game-playing-agent/blob/main/LICENSE) for details.
+MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](LICENSE) for details.
 
 ---
 
@@ -143,5 +151,5 @@ MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](ht
   <a href="https://github.com/ysskrishna">Author's GitHub</a> •
   <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
   <a href="https://ysskrishna.space">Author's site</a> •
-  <a href="https://github.com/ysskrishna/ai-game-playing-agent/issues">Report Issues</a>
+  <a href="https://github.com/ysskrishna/ai-game-playtesting-agent/issues">Report Issues</a>
 </p>
